@@ -12,15 +12,17 @@ When using rake with rails it loads the task in the following order:
 2. The tasks in your app's lib/tasks directory
 3. The tasks in your vendor/plugins directory
 
-This plugin will allow to override rake tasks that were defined earlier. It means that 
-you'll be able to override default rails tasks with lib/tasks & plugins tasks and 
-override the taksks in lib/tasks with the tasks defined in plugins.
+This plugin will allow to override and/or extend rake tasks that were defined earlier. 
+It means that you'll be able to override default rails tasks with lib/tasks & plugins 
+tasks and override the tasks in lib/tasks with the tasks defined in plugins. 
 
 In order to override a task you need to define it as usual, but using "override_task" 
-method instead of "task":
+method instead of "task". You can also call the original (aliased) task in the new block:
 
 namespace :db do
 	override_task :migrate do
+		...
+        Rake::Task[ "db:migrate:original" ].execute
 		...
 	end
 end
