@@ -11,6 +11,6 @@ end
 
 def override_task(args, &block)
   name, deps = Rake.application.resolve_args([args])  
-  remove_task Rake.application[name].name
+  remove_task name
   task(args, &block)
 end
