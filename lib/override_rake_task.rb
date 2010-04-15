@@ -1,16 +1,16 @@
 # OverrideRakeTask
 Rake::TaskManager.class_eval do
-  def remove_task(task_name)
-    @tasks.delete(task_name.to_s)
-  end
-end
- 
-def remove_task(task_name)
-  Rake.application.remove_task(task_name)
+  def alias_task(old_name, new_name)
+    @tasks[new_name] = @tasks.delete(old_name)
+  end 
 end
 
-def override_task(args, &block)
-  name, deps = Rake.application.resolve_args([args])  
-  remove_task name
-  task(args, &block)
+def alias_task(old_name, new_name)
+  Rake.application.alias_task(old_name, new_name)
+end
+
+def override_task(*args, &block)
+  name, params, deps = Rake.application.resolve_args(args.dup)
+  alias_task name.to_s, "#{name}:original"
+  Rake::Task.define_task(*args, &block)
 end
