@@ -32,7 +32,8 @@ In order to make this work the plugin must be loaded before the tasks and the in
 supplied with the plugin adds a line to load itself to the Rakefile. If can't modify your Rakefile, 
 it will let you know and you'll need to modify it manually.
 
-Tested with: Rake 0.8.7
+Tested with: Rake 0.8.7, Rails 2.3.5
+Doesn't seem to work with Rails 3
 
 Contributors:
 
