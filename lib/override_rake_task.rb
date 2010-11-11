@@ -11,6 +11,7 @@ end
 
 def override_task(*args, &block)
   name, params, deps = Rake.application.resolve_args(args.dup)
-  alias_task name.to_s, "#{name}:original"
+  name_with_scope = "#{Rake.application.current_scope.join(":")}:#{name}"
+  alias_task name_with_scope, "#{name_with_scope}:original"
   Rake::Task.define_task(*args, &block)
 end
